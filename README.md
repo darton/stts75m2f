@@ -19,3 +19,18 @@ You can install the library using pip:
 ```bash
 pip install stts75m2f
 ```
+
+## Usage
+
+```
+from stts75m2f import STTS75M2F
+
+# Initialize the sensor
+sensor = STTS75M2F()
+
+# Read temperature data
+temperature = sensor.read_temperature()
+
+print(f"Temperature: {temperature:.2f} °C")
+
+```
