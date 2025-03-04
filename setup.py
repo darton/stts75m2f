@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='stts75m2f',
-    version='0.1',
+    version='0.5',
     packages=find_packages(),
     install_requires=['smbus2'],
     author='Dariusz Kowalczyk',
