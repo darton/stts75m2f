@@ -1,7 +1,3 @@
-Below is an updated example of a README.md file that reflects the new functionality in your library:
-
----
-
 # STTS75M2F Python Library
 
 This is a Python library for interfacing with the **STTS75M2F** temperature sensor via the I²C bus. The library provides an easy-to-use API for reading temperature data and configuring the sensor, including advanced features such as:
