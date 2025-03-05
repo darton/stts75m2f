@@ -29,11 +29,32 @@ class STTS75M2F:
     def read_temperature(self):
         try:
             data = self.bus.read_i2c_block_data(self.address, 0x00, 2)
-            temp = (data[0] << 8 | data[1]) >> 4
-            temp_c = temp * 0.0625
+            temp_raw = (data[0] << 8) | data[1]
+
+            # Read the current resolution setting from the configuration register
+            config = self.read_configuration()
+            resolution = config & STTS75M2F.RESOLUTION_MASK
+
+            # Convert the raw temperature value based on the resolution
+            if resolution == STTS75M2F.RESOLUTION_9BIT:
+                temp_raw >>= 7
+                temp_c = temp_raw * 0.5
+            elif resolution == STTS75M2F.RESOLUTION_10BIT:
+                temp_raw >>= 6
+                temp_c = temp_raw * 0.25
+            elif resolution == STTS75M2F.RESOLUTION_11BIT:
+                temp_raw >>= 5
+                temp_c = temp_raw * 0.125
+            elif resolution == STTS75M2F.RESOLUTION_12BIT:
+                temp_raw >>= 4
+                temp_c = temp_raw * 0.0625
+            else:
+                raise RuntimeError("Invalid resolution setting")
+
             return temp_c
         except Exception as e:
             raise RuntimeError(f"Failed to read temperature from STTS75M2F sensor: {e}")
+
 
     def set_configuration(self, config_value):
         try:
@@ -94,3 +115,4 @@ class STTS75M2F:
 
     def close(self):
         self.bus.close()
+
