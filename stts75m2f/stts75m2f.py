@@ -115,4 +115,3 @@ class STTS75M2F:
 
     def close(self):
         self.bus.close()
-
